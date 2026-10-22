@@ -1,7 +1,7 @@
 [
     {
         "refund_window": "7 days",
-        "eligible_reasons": ["prodcut broken","not interested","size issue","wrong product"],
+        "eligible_reasons": ["product broken","not interested","size issue","wrong product"],
         "ineligible_reasons": ["product accessories incomplete","expired product"],
         "human_review_conditions": ["food items","medicine","clothing","incomplete evidence","unsatisfactory evidence"]
     }

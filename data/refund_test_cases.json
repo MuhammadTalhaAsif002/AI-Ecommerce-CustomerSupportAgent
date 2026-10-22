@@ -1,18 +1,58 @@
 [
     {
-        "shipped_date":"2026-10-18",
-        "refund_request_date":"2026-10-23",
-        "reason":"prodcut broken",
-        "evidence":"valid reason",
-        "expected_decision":""
-
-},
-{
-        "shipped_date":"2026-10-18",
-        "refund_request_date":"2026-10-25",
-        "reason":"not interested in product",
-        "evidence":"invalid reason",
-        "expected_decision":""
-
-}
+        "shipped_date": "2026-10-18",
+        "refund_request_date": "2026-10-23",
+        "reason": "product broken",
+        "evidence": "valid reason",
+        "expected_decision": "approved",
+        "actual_decision": "approved"
+    },
+    {
+        "shipped_date": "2026-10-18",
+        "refund_request_date": "2026-10-25",
+        "reason": "not interested",
+        "evidence": "invalid reason",
+        "expected_decision": "human_review",
+        "actual_decision": "human_review"
+    },
+    {
+        "shipped_date": "2026-10-22",
+        "refund_request_date": "2026-10-25",
+        "reason": "size issue",
+        "evidence": "valid reason",
+        "expected_decision": "approved",
+        "actual_decision": "approved"
+    },
+    {
+        "shipped_date": "2026-10-23",
+        "refund_request_date": "2026-10-25",
+        "reason": "incomplete evidence",
+        "evidence": "valid reason",
+        "expected_decision": "human_review",
+        "actual_decision": "human_review"
+    },
+    {
+        "shipped_date": "2026-10-23",
+        "refund_request_date": "2026-10-25",
+        "reason": "unknown",
+        "evidence": "",
+        "expected_decision": "human_review",
+        "actual_decision": "human_review"
+    },
+    {
+        "shipped_date": "2026-10-23",
+        "refund_request_date": "2026-11-03",
+        "reason": "wrong product",
+        "evidence": "valid reason",
+        "expected_decision": "rejected",
+        "actual_decision": "rejected"
+    },
+    {
+        "shipped_date": "2026-10-23",
+        "refund_request_date": "2026-10-20",
+        "reason": "wrong product",
+        "evidence": "valid reason",
+        "expected_decision": "rejected",
+        "actual_decision": "rejected"
+    }
 ]
