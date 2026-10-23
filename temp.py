@@ -2,28 +2,32 @@ import json
 from datetime import datetime
 
 
-# Open and read the JSON file
-with (
-    open('data/refund_test_cases.json', 'r', encoding='utf-8') as f1,
-    open('data/refund_policy.json', 'r', encoding='utf-8') as f2,
-    open('data/test_queries.json', 'r', encoding='utf-8') as f3
-):
-    data1 = json.load(f1)
-    data2 = json.load(f2)
-    data3 = json.load(f3)
+def read_json():
+    # Open and read the JSON file
+    with (
+        open('data/refund_test_cases.json', 'r', encoding='utf-8') as f1,
+        open('data/refund_policy.json', 'r', encoding='utf-8') as f2,
+        open('data/test_queries.json', 'r', encoding='utf-8') as f3
+    ):
+        data1 = json.load(f1)
+        data2 = json.load(f2)
+        data3 = json.load(f3)
+
+        return data1,data2,data3
+
+def check_Eligibility(data1,data2):
 
     day_difference=0
     date_format = "%Y-%m-%d"
 
-    
     for item1 in data1:
         shipped_date = datetime.strptime(item1["shipped_date"],date_format)
         refund_request_date = datetime.strptime(item1["refund_request_date"],date_format)
         day_difference = (refund_request_date - shipped_date).days
         #check for the eligibility
-        if(0<day_difference<=7):
-            if(item1["reason"] in data2[0]["human_review_conditions"] or  item1["evidence"]=="invalid reason"):
-                item1["actual_decision"]="human_review" 
+        if(0<=day_difference<=7):
+            if(item1["reason"] in data2[0]["human_review_conditions"] or item1["evidence"]=="invalid reason"):
+                item1["actual_decision"]="human_review"
             elif(item1["reason"] in data2[0]["eligible_reasons"]):
                 item1["actual_decision"]="approved"
             elif(item1["reason"] in data2[0]["ineligible_reasons"]):
@@ -33,10 +37,32 @@ with (
                 item1["actual_decision"]="human_review"
             else:
                 item1["actual_decision"]="human_review"
+        elif(day_difference<0):
+            item1["actual_decision"]="req before shipping"   
         else:
-            item1["actual_decision"]="rejected"
-    with open("data/refund_test_cases.json", "w", encoding="utf-8") as file:
-        json.dump(data1,file, indent=4)
+            item1["actual_decision"]="refund window expired"
+    return data1
 
+def test_refund_logic(data):
+    count=0
+    total_count=len(data)
+    for i in data:
+        if(i["expected_decision"]==i["actual_decision"]):
+            count+=1
+    pass_percentage=count/total_count *100
+    return pass_percentage
+            
 
+    
 
+def main():
+
+    data1,data2,data3=read_json()
+    # with open("data/refund_test_cases.json", "w", encoding="utf-8") as file:
+    #     json.dump(check_Eligibility(data1,data2),file, indent=4)
+
+    # print(check_Eligibility(data,data2))
+    print(f"pass percentage is  : {test_refund_logic(data1)}%")
+
+if __name__=="__main__":
+    main()
