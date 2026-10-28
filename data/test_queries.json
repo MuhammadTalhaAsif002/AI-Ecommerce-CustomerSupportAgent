@@ -1,15 +1,18 @@
 [
   {
+    "order_id":"1122",
     "customer_message": "i want a product refund",
     "query_category": "refund",
     "answer": "item will be inspected by our team"
   },
   {
+    "order_id":"122",
     "customer_message": "i want to get status of when my order will be delivered to me",
     "query_category": "order status",
     "answer": "your order will be delivered in 2 working days"
   },
   {
+    "order_id":"1424",
     "customer_message": "why my order is being delayed its been 2 days since commited delivery date",
     "query_category": "delivery delay",
     "answer": "your order is delayed due to ongoing transport strike"

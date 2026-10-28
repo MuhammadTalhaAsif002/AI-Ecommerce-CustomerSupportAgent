@@ -7,13 +7,15 @@ def read_json():
     with (
         open('data/refund_test_cases.json', 'r', encoding='utf-8') as f1,
         open('data/refund_policy.json', 'r', encoding='utf-8') as f2,
-        open('data/test_queries.json', 'r', encoding='utf-8') as f3
+        open('data/test_queries.json', 'r', encoding='utf-8') as f3,
+        open('data/orders.json', 'r', encoding='utf-8') as f4
     ):
         data1 = json.load(f1)
         data2 = json.load(f2)
         data3 = json.load(f3)
+        data4 = json.load(f4)
 
-        return data1,data2,data3
+        return data1,data2,data3,data4
 
 def check_Eligibility(data1,data2):
 
@@ -45,6 +47,7 @@ def check_Eligibility(data1,data2):
             item1["actual_decision"]="req before shipping"   
         else:
             item1["actual_decision"]="refund window expired"
+    print(f"invalid cases are{invalid_cases}")
     return data1
 
 def test_refund_logic(data):
@@ -65,19 +68,38 @@ def test_refund_logic(data):
     return pass_percentage,failed_cases
             
 
+def order_lookup(data3,data4):
+    boolean=False
+    mismatch=[]
+    match=[]
+    for i in range(len(data3)):
+        for j  in range(len(data4)):
+            if(data3[i]["order_id"] == data4[j]["order_id"]):
+                boolean=True
+            if(boolean==True):
+                match.append(data4[j])
+                print(f"in match i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
+                boolean=False
+                break
+        mismatch.append(data3[i])
+        print(f"in mismatch i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
+    return match,mismatch
     
+
 
 def main():
 
-    data1,data2,data3=read_json()
-    # with open("data/refund_test_cases.json", "w", encoding="utf-8") as file:
-    #     json.dump(check_Eligibility(data1,data2),file, indent=4)
+    data1,data2,data3,data4=read_json()
+    with open("data/refund_test_cases.json", "w", encoding="utf-8") as file:
+        json.dump(check_Eligibility(data1,data2),file, indent=4)
 
-    
-    # print(check_Eligibility(data,data2))
-    pass_percentage,failed_cases=test_refund_logic(data1)
-    print(f"pass percentage is  : {pass_percentage}%")
-    print(f"Failed Cases  : {failed_cases}")
+    match,mismatch=order_lookup(data3,data4)
+    print(f"match ids are : {match}")
+    print(f"mismatch ids are : {mismatch}")
+    # print(check_Eligibility(data1,data2))
+    # pass_percentage,failed_cases=test_refund_logic(data1)
+    # print(f"pass percentage is  : {pass_percentage}%")
+    # print(f"Failed Cases  : {failed_cases}")
 
 if __name__=="__main__":
     main()

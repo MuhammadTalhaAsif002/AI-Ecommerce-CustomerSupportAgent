@@ -3,9 +3,9 @@
         "shipped_date": "2026-10-18",
         "refund_request_date": "2026-10-23",
         "reason": "product broken",
-        "evidence": "valid reason",
+        "evidence": "invalid reason",
         "expected_decision": "approved",
-        "actual_decision": "approved"
+        "actual_decision": "human_review"
     },
     {
         "shipped_date": "2026-10-18",
@@ -45,7 +45,7 @@
         "reason": "wrong product",
         "evidence": "valid reason",
         "expected_decision": "rejected",
-        "actual_decision": "rejected"
+        "actual_decision": "refund window expired"
     },
     {
         "shipped_date": "2026-10-23",
@@ -53,6 +53,6 @@
         "reason": "wrong product",
         "evidence": "valid reason",
         "expected_decision": "rejected",
-        "actual_decision": "rejected"
+        "actual_decision": "req before shipping"
     }
 ]
