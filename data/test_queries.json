@@ -16,5 +16,11 @@
     "customer_message": "why my order is being delayed its been 2 days since commited delivery date",
     "query_category": "delivery delay",
     "answer": "your order is delayed due to ongoing transport strike"
+  },
+  {
+    "order_id":"9999",
+    "customer_message": "why my order is being delayed its been 4 days since commited delivery date",
+    "query_category": "delivery delay",
+    "answer": "your order is delayed from vendor end"
   }
 ]

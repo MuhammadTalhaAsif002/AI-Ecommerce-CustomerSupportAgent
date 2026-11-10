@@ -72,19 +72,37 @@ def order_lookup(data3,data4):
     boolean=False
     mismatch=[]
     match=[]
-    for i in range(len(data3)):
-        for j  in range(len(data4)):
-            if(data3[i]["order_id"] == data4[j]["order_id"]):
-                boolean=True
+    invalid_queries=[]
+    
+    if(data4):
+        for i in range(len(data3)):
+            boolean=False
+            invalid_queries_flag=False
+            for j  in range(len(data4)):
+                try:
+                    if(data3[i]["order_id"] == data4[j]["order_id"]):
+                        boolean=True
+                        break
+                    else:
+                        boolean=False
+                except KeyError:
+                    print(f"order_id is missing at i,j{(i,j)}")
+                    invalid_queries.append(data3[i])
+                    invalid_queries_flag=True
+                    break
+            if(invalid_queries_flag==True):
+                continue
             if(boolean==True):
                 match.append(data4[j])
                 print(f"in match i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
-                boolean=False
-                break
-        mismatch.append(data3[i])
-        print(f"in mismatch i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
-    return match,mismatch
-    
+            elif(data3[i]["order_id"]==""):
+                invalid_queries.append(data3[i])
+            else:
+                mismatch.append(data3[i])
+                print(f"in mismatch i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
+        return match,mismatch,invalid_queries
+    else:
+        return "data4 is empty"
 
 
 def main():
@@ -93,9 +111,16 @@ def main():
     with open("data/refund_test_cases.json", "w", encoding="utf-8") as file:
         json.dump(check_Eligibility(data1,data2),file, indent=4)
 
-    match,mismatch=order_lookup(data3,data4)
-    print(f"match ids are : {match}")
-    print(f"mismatch ids are : {mismatch}")
+    result=order_lookup(data3,data4)
+    if(result == "data4 is empty"):
+        print(result)
+    else:
+        match, mismatch,invalid_queries= result
+        print(f"match ids are : {match}")
+        print(f"mismatch ids are : {mismatch}")
+        print(f"invalid_queries ids are : {invalid_queries}")
+       
+
     # print(check_Eligibility(data1,data2))
     # pass_percentage,failed_cases=test_refund_logic(data1)
     # print(f"pass percentage is  : {pass_percentage}%")
