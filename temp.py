@@ -69,15 +69,14 @@ def test_refund_logic(data):
             
 
 def order_lookup(data3,data4):
-    boolean=False
     mismatch=[]
     match=[]
     invalid_queries=[]
     
     if(data4):
         for i in range(len(data3)):
-            boolean=False
-            invalid_queries_flag=False
+            boolean=False        # match/mismatch flag
+            invalid_queries_flag=False # invald flag
             for j  in range(len(data4)):
                 try:
                     if(data3[i]["order_id"] == data4[j]["order_id"]):
@@ -85,7 +84,7 @@ def order_lookup(data3,data4):
                         break
                     else:
                         boolean=False
-                except KeyError:
+                except KeyError:                                      # order id is missing-keyerror
                     print(f"order_id is missing at i,j{(i,j)}")
                     invalid_queries.append(data3[i])
                     invalid_queries_flag=True
@@ -94,15 +93,15 @@ def order_lookup(data3,data4):
                 continue
             if(boolean==True):
                 match.append(data4[j])
-                print(f"in match i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
+                # print(f"in match i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
             elif(data3[i]["order_id"]==""):
                 invalid_queries.append(data3[i])
             else:
                 mismatch.append(data3[i])
-                print(f"in mismatch i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
+                # print(f"in mismatch i,j {(i,j)} data3:{data3[i]['order_id']}  data4:{data4[j]['order_id']}")
         return match,mismatch,invalid_queries
     else:
-        return "data4 is empty"
+        return "data4 is empty"  # if order table is empty - no orders
 
 
 def main():
